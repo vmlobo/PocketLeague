@@ -45,25 +45,21 @@ public class GameManager : MonoBehaviour
 
     public void Goal(GameObject player)
     {
-        //TODO overlay text
         if (player.gameObject.name == "Player1")
         {
             scorePlayer1++;
 
-            Debug.Log(scorePlayer1); //TODO show player scores and time
+            Debug.Log(scorePlayer1); 
             Debug.Log(scorePlayer2);
 
             StartCoroutine(Restart());
-
-            //TODO win condition
         }
         else
         {
             scorePlayer2++;
             
             Debug.Log(scorePlayer1);
-            Debug.Log(scorePlayer2); //TODO reset player boost
-
+            Debug.Log(scorePlayer2);
 
             StartCoroutine(Restart());
         }
@@ -97,6 +93,8 @@ public class GameManager : MonoBehaviour
         player2.transform.position = player2Initialpos;
         player1.transform.rotation = player1Initialrot;
         player2.transform.rotation = player2Initialrot;
+        player1.GetComponent<CarController>().boost = 100;
+        player2.GetComponent<CarController>().boost = 100;
 
         Debug.Log("restarting");
     }

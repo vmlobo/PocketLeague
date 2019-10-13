@@ -20,7 +20,7 @@ public class CarController : MonoBehaviour
     private float jumpCD;
     private int jumpCount;
     private ParticleSystem ps;
-    private float boost;
+    public float boost;
 
     // Start is called before the first frame update
     void Start()
