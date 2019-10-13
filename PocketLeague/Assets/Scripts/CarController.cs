@@ -33,7 +33,6 @@ public class CarController : MonoBehaviour
 
         boost = 100;
         jumpCount = 0;
-        jumpCD = 5; //TODO cd
 
     }
 
@@ -42,52 +41,96 @@ public class CarController : MonoBehaviour
     {
         isGroundedCheck();
 
-        if (Input.GetKey(KeyCode.D)) //TODO handle input for different players
-        {
-            if (isGrounded)
-                body.AddForce(transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
-            else
-                body.AddTorque(transform.right*turnRate, ForceMode.Acceleration);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            if (isGrounded)
-                body.AddForce(-transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
-            else
-                body.AddTorque(-transform.right*turnRate, ForceMode.Acceleration);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            jump();
-        }
-        if (Input.GetKey(KeyCode.LeftShift) && boost > 0)
-        {
-            Debug.Log("started boost");
-            boost -= 1.0f;
-            ps.Play();
-            body.AddForce(transform.forward * boostForce, ForceMode.Acceleration);
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift) || boost <= 0)
-        {
-            Debug.Log("stopped boost");
-            ps.Stop();
+        if (transform.name == "Player1")
+            handleInputP1();
+        else
+            handleInputP2();
 
-        }
+
 
     }
 
-    private void jump() //TODO tudo
+    private void handleInputP2()
     {
+        float h;
 
-        body.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        if ((h = Input.GetAxisRaw("Horizontal1")) != 0)
+        {
+            if (isGrounded)
+                body.AddForce(-h * transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
+            else
+                body.AddTorque(-h * transform.right * turnRate, ForceMode.Acceleration);
+        }
+        if (Input.GetButtonDown("Jump1"))
+        {
+            jump();
+        }
+        if (Input.GetButton("Boost1") && boost > 0)
+        {
+            boostController(1);
+        }
+        if (Input.GetButtonUp("Boost1") || boost <= 0)
+        {
+            boostController(0);
+        }
+    }
 
+    private void handleInputP1()
+    {
+        float h;
+
+        if ((h = Input.GetAxisRaw("Horizontal")) != 0)
+        {
+            if (isGrounded)
+                body.AddForce(h*transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
+            else
+                body.AddTorque(h*transform.right * turnRate, ForceMode.Acceleration);
+        }
+        if (Input.GetButtonDown("Jump"))
+        {
+            jump();
+        }
+        if (Input.GetButton("Boost") && boost > 0)
+        {
+            boostController(1);
+        }
+        if (Input.GetButtonUp("Boost") || boost <= 0)
+        {
+            boostController(0);
+
+        }
+    }
+
+    private void boostController(int i)
+    {
+        if (i == 0)
+        {
+            ps.Stop();
+        }
+        else
+        {
+            boost -= 1.0f; //TODO boost rate
+            ps.Play();
+            body.AddForce(transform.forward * boostForce, ForceMode.Acceleration);
+        }
+    }
+
+    private void jump() 
+    {
+        if (isGrounded)
+        {
+            jumpCount = 1;
+            body.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        }
+        else if(jumpCount  <= 1) {
+            body.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            jumpCount++;
+        }
     }
 
     void isGroundedCheck()
     {
         isGrounded = Physics.Raycast(transform.position, -transform.up, 0.45f);
-        //Debug.DrawRay(transform.position, -transform.up*isGroundedRange);
-        //Debug.Log("isGrounded:" + isGrounded);
     } //TODO while !isGrounded trail renderer
 
 
