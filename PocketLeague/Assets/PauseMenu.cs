@@ -7,11 +7,18 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
 
-
+    private GameManager gm;
     public static bool isPaused = false;
+
+    public GameObject player1;
+    public GameObject player2;
 
     public GameObject pauseMenuUi;
 
+    private void Start()
+    {
+        gm = GameObject.FindObjectOfType<GameManager>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -25,6 +32,15 @@ public class PauseMenu : MonoBehaviour
             {
                 Pause();
             }
+        }
+
+        if(gm.scorePlayer1 > gm.scorePlayer2 && gm.scorePlayer1 > 5)
+        {
+            gm.Win(player1);
+        }
+        else if (gm.scorePlayer1 < gm.scorePlayer2 && gm.scorePlayer1 > 5)
+        {
+            gm.Win(player2);
         }
         
     }
