@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class ColorScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-
+    public float antiGravForce;
+    private Rigidbody rb;
     Renderer rend;
 
     void Start()
     {
+        rb = transform.GetComponent<Rigidbody>();
         rend = GetComponent<Renderer>();
     }
 
@@ -17,6 +18,7 @@ public class ColorScript : MonoBehaviour
     {
         float exp = 0.6f+Mathf.PingPong(Time.time, 1.5f);
         rend.material.SetFloat("_FresnelExponent", exp);
+        rb.AddForce(new Vector3(0,1*antiGravForce,0),ForceMode.Force);
     }
 
     private void OnCollisionEnter(Collision collision)
