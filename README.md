@@ -14,5 +14,5 @@ Credits​:
 -Vitor Lobo (programming)
 
 Some assets and resources used:
-https://assetstore.unity.com/packages/3d/vehicles/land/stylized-customizable-cars-post-apo-v1-130909x2228/3474-ciudad-nocturna-en-arte-neon.html - Assets for the cars
+https://assetstore.unity.com/packages/3d/vehicles/land/stylized-customizable-cars-post-apo-v1-130909x2228/3474-ciudad-nocturna-en-arte-neon.html - Vehichle assets
 https://www.ronja-tutorials.com/2018/05/26/fresnel.html - Great shader tutorial
