@@ -17,6 +17,7 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUi;
     public GameObject gameOverScreenUI;
+    public GameObject time;
 
     public TextMeshProUGUI winTxt;
     public TextMeshProUGUI timeTxt;
@@ -27,6 +28,7 @@ public class PauseMenu : MonoBehaviour
     {
         gm = GameObject.FindObjectOfType<GameManager>();
         cd = GameObject.FindObjectOfType<Countdown>();
+       
     }
     // Update is called once per frame
     void Update()
@@ -103,10 +105,19 @@ public class PauseMenu : MonoBehaviour
     public void PlayAgain()
     {
         Time.timeScale = 1.0f;
+        time.SetActive(true);
         SceneManager.LoadScene(1);
+      
     }
     private void GameOver()
     {
+        time.SetActive(false);
+        Time.timeScale = 0.0f;
+        gameOverScreenUI.SetActive(true);
+
+
+
+
         if (isaTie)
         {
             winTxt.text = ("It's a tie");
@@ -115,8 +126,7 @@ public class PauseMenu : MonoBehaviour
         {
             winTxt.text = (gm.winner + " Wins!");
         }
-        Time.timeScale = 0.0f;
-        gameOverScreenUI.SetActive(true);
+
         
 
     }
