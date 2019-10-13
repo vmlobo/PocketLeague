@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO adjust ball params
+
 public class GameManager : MonoBehaviour
 {
     public GameObject player1;
@@ -13,9 +15,6 @@ public class GameManager : MonoBehaviour
 
     private GameObject goalPlayer1;
     private GameObject goalPlayer2;
-
-    //public Rigidbody rb;
-    //private CarController cr;
 
     int scorePlayer1 = 0;
     int scorePlayer2 = 0;
@@ -43,13 +42,8 @@ public class GameManager : MonoBehaviour
         {
             scorePlayer1++;
 
-            Debug.Log(scorePlayer1);
+            Debug.Log(scorePlayer1); //TODO show player scores and time
             Debug.Log(scorePlayer2);
-
-            player1.transform.position = player1pos;
-            player2.transform.position = player2pos;
-            ball.transform.position = ballpos;
-         
 
             StartCoroutine(Restart());
 
@@ -60,11 +54,7 @@ public class GameManager : MonoBehaviour
             scorePlayer2++;
             
             Debug.Log(scorePlayer1);
-            Debug.Log(scorePlayer2);
-
-            player1.transform.position = player1pos;
-            player2.transform.position = player2pos;
-            ball.transform.position = ballpos;
+            Debug.Log(scorePlayer2); //TODO reset player boost
 
 
             StartCoroutine(Restart());
@@ -80,12 +70,13 @@ public class GameManager : MonoBehaviour
 
         Destroy(ball);//TODO explosao bola
         
-
         Time.timeScale = 0.5f;
-
-        yield return new WaitForSeconds(1.5f);
+        Time.fixedDeltaTime = 0.3f * 0.02f;
+        yield return new WaitForSeconds(2f);
 
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = 1f * 0.02f;
+
 
         ball = Instantiate(prefabBola, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
 

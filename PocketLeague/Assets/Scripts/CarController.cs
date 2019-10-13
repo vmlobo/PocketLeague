@@ -33,7 +33,7 @@ public class CarController : MonoBehaviour
 
         boost = 100;
         jumpCount = 0;
-        jumpCD = 5;
+        jumpCD = 5; //TODO cd
 
     }
 
@@ -81,7 +81,7 @@ public class CarController : MonoBehaviour
 
     }
 
-    private void jump()
+    private void jump() //TODO tudo
     {
 
         body.AddForce(transform.up * jumpForce, ForceMode.Impulse);
