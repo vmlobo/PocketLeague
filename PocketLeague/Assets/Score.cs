@@ -20,5 +20,6 @@ public class Score : MonoBehaviour
     void Update()
     {
         score.text = gm.scorePlayer1.ToString() + " - " + gm.scorePlayer2.ToString();
+     
     }
 }

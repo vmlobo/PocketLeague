@@ -8456,9 +8456,9 @@ MonoBehaviour:
   player2: {fileID: 268659597}
   pauseMenuUi: {fileID: 655844740}
   gameOverScreenUI: {fileID: 2126436694}
-  score: {fileID: 481906970}
+  time: {fileID: 2114521024}
   winTxt: {fileID: 1246945834}
-  timeTxt: {fileID: 0}
+  timeTxt: {fileID: 321070045}
 --- !u!114 &1732329974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9680,7 +9680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d934b5971541240be6335791887f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 10
+  timeLeft: 5
   countdown: {fileID: 321070045}
 --- !u!1 &2126436694
 GameObject:
