@@ -4889,6 +4889,7 @@ MonoBehaviour:
   jumpForce: 400
   boostForce: 25
   turnRate: 10
+  boost: 0
 --- !u!64 &268659601
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5077,7 +5078,7 @@ GameObject:
   - component: {fileID: 321070046}
   - component: {fileID: 321070045}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6897,7 +6898,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Win!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2589683973fb1594492854900f4dcb80, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fca71916767e0a442a77b40bb36d7927, type: 2}
   m_sharedMaterial: {fileID: 8309056641385711676, guid: 2589683973fb1594492854900f4dcb80,
     type: 2}
   m_fontSharedMaterials: []
@@ -6976,7 +6977,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -8455,6 +8456,7 @@ MonoBehaviour:
   player2: {fileID: 268659597}
   pauseMenuUi: {fileID: 655844740}
   gameOverScreenUI: {fileID: 2126436694}
+  score: {fileID: 481906970}
   winTxt: {fileID: 1246945834}
   timeTxt: {fileID: 0}
 --- !u!114 &1732329974
@@ -8896,8 +8898,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 2589683973fb1594492854900f4dcb80, type: 2}
-  m_sharedMaterial: {fileID: 8309056641385711676, guid: 2589683973fb1594492854900f4dcb80,
+  m_fontAsset: {fileID: 11400000, guid: fca71916767e0a442a77b40bb36d7927, type: 2}
+  m_sharedMaterial: {fileID: -929990484346428369, guid: fca71916767e0a442a77b40bb36d7927,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -9678,7 +9680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d934b5971541240be6335791887f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 5
+  timeLeft: 10
   countdown: {fileID: 321070045}
 --- !u!1 &2126436694
 GameObject:
@@ -9813,6 +9815,7 @@ MonoBehaviour:
   jumpForce: 400
   boostForce: 25
   turnRate: 10
+  boost: 0
 --- !u!198 &1217994286559311
 ParticleSystem:
   m_ObjectHideFlags: 0
