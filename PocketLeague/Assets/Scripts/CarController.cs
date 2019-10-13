@@ -51,11 +51,7 @@ public class CarController : MonoBehaviour
 
     }
 
-    public void resetBoost()
-    {
-        boost = 100;
-    }
-
+    
     private void handleInputP2()
     {
         float h;
@@ -126,6 +122,16 @@ public class CarController : MonoBehaviour
         }
 
 
+    }
+
+    public void resetBoost()
+    {
+        boost = 100;
+    }
+
+    public float getBoost()
+    {
+        return boost;
     }
 
     private void jump() 
