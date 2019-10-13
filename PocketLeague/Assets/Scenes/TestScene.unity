@@ -5898,8 +5898,8 @@ MonoBehaviour:
   boostForce: 25
   turnRate: 25
   flipForce: 1000
-  boostDischargeRate: 50
-  boostChargeRate: 0
+  boostDischargeRate: 60
+  boostChargeRate: 20
 --- !u!64 &620128334
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -14104,8 +14104,8 @@ MonoBehaviour:
   boostForce: 25
   turnRate: 25
   flipForce: 1000
-  boostDischargeRate: 50
-  boostChargeRate: 0
+  boostDischargeRate: 60
+  boostChargeRate: 20
 --- !u!64 &1890940298
 MeshCollider:
   m_ObjectHideFlags: 0
