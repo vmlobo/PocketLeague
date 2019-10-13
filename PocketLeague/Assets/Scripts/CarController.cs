@@ -20,6 +20,7 @@ public class CarController : MonoBehaviour
     private float jumpCD;
     private int jumpCount;
     private ParticleSystem ps;
+    private TrailRenderer tr;
     private float boost;
 
     // Start is called before the first frame update
@@ -28,6 +29,8 @@ public class CarController : MonoBehaviour
 
         body = GetComponent<Rigidbody>();
         ps = GetComponent<ParticleSystem>();
+        tr = GetComponent<TrailRenderer>();
+
 
         boost = 100;
         jumpCount = 0;
@@ -48,6 +51,10 @@ public class CarController : MonoBehaviour
             handleInputP2();
 
         boost = Mathf.Clamp(boost + (boostChargeRate * Time.deltaTime),0,100);
+        if (!isFlipped && !isGrounded)
+            tr.emitting = true;
+        else
+            tr.emitting = false;
 
     }
 
@@ -59,7 +66,7 @@ public class CarController : MonoBehaviour
         if ((h = Input.GetAxisRaw("Horizontal1")) != 0)
         {
             if (isGrounded)
-                body.AddForce(-h * transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
+                body.AddForce(-h * transform.forward * impulseForce, ForceMode.Acceleration); 
             else if (isFlipped)
                 body.AddTorque(-h * transform.right * flipForce, ForceMode.VelocityChange);
             else
@@ -87,7 +94,7 @@ public class CarController : MonoBehaviour
         if ((h = Input.GetAxisRaw("Horizontal")) != 0)
         {
             if (isGrounded)
-                body.AddForce(h * transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
+                body.AddForce(h * transform.forward * impulseForce, ForceMode.Acceleration);
             else if (isFlipped)
                 body.AddTorque(h * transform.right * flipForce, ForceMode.VelocityChange);
             else
@@ -116,12 +123,10 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            boost -= boostDischargeRate*Time.deltaTime; //TODO boost rate
+            boost -= boostDischargeRate*Time.deltaTime; 
             ps.Play();
             body.AddForce(transform.forward * boostForce, ForceMode.Acceleration);
         }
-
-
     }
 
     public void resetBoost()
@@ -153,7 +158,7 @@ public class CarController : MonoBehaviour
         isGrounded = Physics.Raycast(transform.position, -transform.up, 0.45f);
         isFlipped = Physics.Raycast(transform.position, transform.up, 0.40f);
         Debug.DrawRay(transform.position, transform.up* 0.40f);
-    } //TODO while !isGrounded trail renderer
+    }
 
 
 
