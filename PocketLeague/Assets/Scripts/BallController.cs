@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorScript : MonoBehaviour
+public class BallController : MonoBehaviour
 {
     public float antiGravForce;
     private Rigidbody rb;
