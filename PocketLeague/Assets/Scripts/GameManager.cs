@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO adjust ball params
 //TODO post processing
 
 public class GameManager : MonoBehaviour
@@ -27,8 +26,6 @@ public class GameManager : MonoBehaviour
     Vector3 player2Initialpos;
     Quaternion player1Initialrot;
     Quaternion player2Initialrot;
-    Vector3 ballpos;
-
 
     private void Start()
     {
@@ -39,8 +36,6 @@ public class GameManager : MonoBehaviour
         player2Initialpos = player2.transform.position;
         player1Initialrot = player1.transform.rotation;
         player2Initialrot = player2.transform.rotation;
-         ballpos = ball.transform.position;
-
     }
 
     public void Goal(GameObject player)
@@ -71,7 +66,6 @@ public class GameManager : MonoBehaviour
  
         Debug.Log("Pausing");
 
-
         Destroy(ball);//TODO explosao bola
         
         Time.timeScale = 0.5f;
@@ -93,8 +87,8 @@ public class GameManager : MonoBehaviour
         player2.transform.position = player2Initialpos;
         player1.transform.rotation = player1Initialrot;
         player2.transform.rotation = player2Initialrot;
-        player1.GetComponent<CarController>().boost = 100;
-        player2.GetComponent<CarController>().boost = 100;
+        player1.GetComponent<CarController>().resetBoost();
+        player2.GetComponent<CarController>().resetBoost();
 
         Debug.Log("restarting");
     }
