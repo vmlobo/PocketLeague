@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //TODO adjust ball params
+//TODO post processing
 
 public class GameManager : MonoBehaviour
 {
@@ -22,8 +23,10 @@ public class GameManager : MonoBehaviour
     public int scorePlayer1 = 0;
     public int scorePlayer2 = 0;
 
-    Vector3 player1pos;
-    Vector3 player2pos;
+    Vector3 player1Initialpos;
+    Vector3 player2Initialpos;
+    Quaternion player1Initialrot;
+    Quaternion player2Initialrot;
     Vector3 ballpos;
 
 
@@ -32,15 +35,17 @@ public class GameManager : MonoBehaviour
         goalPlayer1 = Instantiate(goalPrefab, new Vector3(-11.33f, Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
         goalPlayer2 = Instantiate(goalPrefab, new Vector3(11.33f, Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
         ball = Instantiate(prefabBola, new Vector3(0.0f, 5.0f, 0.0f), Quaternion.identity);
-        player1pos = player1.transform.position;
-        player2pos = player2.transform.position;
-        ballpos = ball.transform.position;
+        player1Initialpos = player1.transform.position;
+        player2Initialpos = player2.transform.position;
+        player1Initialrot = player1.transform.rotation;
+        player2Initialrot = player2.transform.rotation;
+         ballpos = ball.transform.position;
 
     }
 
     public void Goal(GameObject player)
     {
-        
+        //TODO overlay text
         if (player.gameObject.name == "Player1")
         {
             scorePlayer1++;
@@ -50,7 +55,7 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(Restart());
 
-
+            //TODO win condition
         }
         else
         {
@@ -88,8 +93,10 @@ public class GameManager : MonoBehaviour
         goalPlayer1 = Instantiate(goalPrefab, new Vector3(-11f, Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
         goalPlayer2 = Instantiate(goalPrefab, new Vector3(11f, Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
 
-        player1.transform.position = player1pos;
-        player2.transform.position = player2pos;
+        player1.transform.position = player1Initialpos;
+        player2.transform.position = player2Initialpos;
+        player1.transform.rotation = player1Initialrot;
+        player2.transform.rotation = player2Initialrot;
 
         Debug.Log("restarting");
     }
