@@ -44,21 +44,17 @@ public class CarController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D)) //TODO handle input for different players
         {
-
             if (isGrounded)
                 body.AddForce(transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
             else
                 body.AddTorque(transform.right*turnRate, ForceMode.Acceleration);
-
         }
         if (Input.GetKey(KeyCode.A))
         {
-
             if (isGrounded)
                 body.AddForce(-transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
             else
                 body.AddTorque(-transform.right*turnRate, ForceMode.Acceleration);
-
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -69,7 +65,6 @@ public class CarController : MonoBehaviour
             Debug.Log("started boost");
             boost -= 1.0f;
             ps.Play();
-
             body.AddForce(transform.forward * boostForce, ForceMode.Acceleration);
         }
         if (Input.GetKeyUp(KeyCode.LeftShift) || boost <= 0)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //TODO adjust ball params
+//TODO post processing
 
 public class GameManager : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     public void Goal(GameObject player)
     {
-        
+        //TODO overlay text
         if (player.gameObject.name == "Player1")
         {
             scorePlayer1++;
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(Restart());
 
-
+            //TODO win condition
         }
         else
         {
