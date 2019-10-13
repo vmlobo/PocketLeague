@@ -62,7 +62,7 @@ public class PauseMenu : MonoBehaviour
             else
             {
                 isaTie = true;
-                gm.Win(player1); //TODO tie
+                gm.Win(player1);
                 GameOver();
             }
         }

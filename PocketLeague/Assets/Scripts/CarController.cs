@@ -9,26 +9,24 @@ public class CarController : MonoBehaviour
     public float jumpForce;
     public float boostForce;
     public float turnRate;
-    //public float isGroundedRange;
+    public float flipForce;
+    public float boostDischargeRate;
+    public float boostChargeRate;
 
     private bool isGrounded;
+    private bool isFlipped;
     private Rigidbody body;
-    private Rigidbody rlW;
-    private Rigidbody rrW;
-    //private Rigidbody flW;
-    //private Rigidbody frW;
+    
     private float jumpCD;
     private int jumpCount;
     private ParticleSystem ps;
-    public float boost;
+    private float boost;
 
     // Start is called before the first frame update
     void Start()
     {
 
         body = GetComponent<Rigidbody>();
-        rlW = transform.GetChild(4).GetComponent<Rigidbody>();
-        rrW = transform.GetChild(5).GetComponent<Rigidbody>();
         ps = GetComponent<ParticleSystem>();
 
         boost = 100;
@@ -39,6 +37,9 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log(boost);
+
         isGroundedCheck();
 
         if (transform.name == "Player1")
@@ -46,8 +47,13 @@ public class CarController : MonoBehaviour
         else
             handleInputP2();
 
+        boost = Mathf.Clamp(boost + (boostChargeRate * Time.deltaTime),0,100);
 
+    }
 
+    public void resetBoost()
+    {
+        boost = 100;
     }
 
     private void handleInputP2()
@@ -58,8 +64,11 @@ public class CarController : MonoBehaviour
         {
             if (isGrounded)
                 body.AddForce(-h * transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
+            else if (isFlipped)
+                body.AddTorque(-h * transform.right * flipForce, ForceMode.VelocityChange);
             else
                 body.AddTorque(-h * transform.right * turnRate, ForceMode.Acceleration);
+
         }
         if (Input.GetButtonDown("Jump1"))
         {
@@ -82,9 +91,11 @@ public class CarController : MonoBehaviour
         if ((h = Input.GetAxisRaw("Horizontal")) != 0)
         {
             if (isGrounded)
-                body.AddForce(h*transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
+                body.AddForce(h * transform.forward * impulseForce, ForceMode.Acceleration); //TODO review force mode
+            else if (isFlipped)
+                body.AddTorque(h * transform.right * flipForce, ForceMode.VelocityChange);
             else
-                body.AddTorque(h*transform.right * turnRate, ForceMode.Acceleration);
+                body.AddTorque(h * transform.right * turnRate, ForceMode.Acceleration);
         }
         if (Input.GetButtonDown("Jump"))
         {
@@ -109,10 +120,12 @@ public class CarController : MonoBehaviour
         }
         else
         {
-            boost -= 1.0f; //TODO boost rate
+            boost -= boostDischargeRate*Time.deltaTime; //TODO boost rate
             ps.Play();
             body.AddForce(transform.forward * boostForce, ForceMode.Acceleration);
         }
+
+
     }
 
     private void jump() 
@@ -126,11 +139,14 @@ public class CarController : MonoBehaviour
             body.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             jumpCount++;
         }
+
     }
 
     void isGroundedCheck()
     {
         isGrounded = Physics.Raycast(transform.position, -transform.up, 0.45f);
+        isFlipped = Physics.Raycast(transform.position, transform.up, 0.40f);
+        Debug.DrawRay(transform.position, transform.up* 0.40f);
     } //TODO while !isGrounded trail renderer
 
 
