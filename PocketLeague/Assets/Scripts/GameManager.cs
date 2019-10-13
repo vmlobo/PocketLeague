@@ -9,15 +9,18 @@ public class GameManager : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
     public GameObject prefabBola;
+    public string winner;
+
     private GameObject ball;
+
 
     public GameObject goalPrefab;
 
     private GameObject goalPlayer1;
     private GameObject goalPlayer2;
 
-    int scorePlayer1 = 0;
-    int scorePlayer2 = 0;
+    public int scorePlayer1 = 0;
+    public int scorePlayer2 = 0;
 
     Vector3 player1pos;
     Vector3 player2pos;
@@ -90,4 +93,25 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("restarting");
     }
+
+
+    public void Win(GameObject player)
+    {
+        Time.timeScale = 0f;
+
+        if (player.name == player1.name)
+        {
+            winner = player1.name;
+
+        } else if(player.name == player2.name)
+        {
+            winner = player2.name;
+        }
+        else
+        {
+            winner = "tie";
+        }
+
+    }
+
 }
