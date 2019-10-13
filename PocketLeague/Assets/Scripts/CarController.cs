@@ -41,7 +41,7 @@ public class CarController : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(boost);
+        //Debug.Log(boost);
 
         isGroundedCheck();
 
@@ -157,7 +157,7 @@ public class CarController : MonoBehaviour
     {
         isGrounded = Physics.Raycast(transform.position, -transform.up, 0.45f);
         isFlipped = Physics.Raycast(transform.position, transform.up, 0.40f);
-        Debug.DrawRay(transform.position, transform.up* 0.40f);
+        //Debug.DrawRay(transform.position, transform.up* 0.40f);
     }
 
 

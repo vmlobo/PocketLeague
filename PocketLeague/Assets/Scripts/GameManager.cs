@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO post processing
-
 public class GameManager : MonoBehaviour
 {
     public GameObject player1;
@@ -64,7 +62,7 @@ public class GameManager : MonoBehaviour
     IEnumerator Restart()
     {
  
-        Debug.Log("Pausing");
+        //Debug.Log("Pausing");
 
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = 0.3f * 0.02f;
@@ -88,7 +86,7 @@ public class GameManager : MonoBehaviour
         player1.GetComponent<CarController>().resetBoost();
         player2.GetComponent<CarController>().resetBoost();
 
-        Debug.Log("restarting");
+        //Debug.Log("restarting");
     }
 
 

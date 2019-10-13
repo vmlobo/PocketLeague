@@ -105,6 +105,7 @@ public class PauseMenu : MonoBehaviour
     public void PlayAgain()
     {
         Time.timeScale = 1.0f;
+        Time.fixedDeltaTime = 1f * 0.02f;
         time.SetActive(true);
         SceneManager.LoadScene(1);
       
