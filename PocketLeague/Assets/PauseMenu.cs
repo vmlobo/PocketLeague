@@ -2,22 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class PauseMenu : MonoBehaviour
 {
 
     private GameManager gm;
+    private Countdown cd;
     public static bool isPaused = false;
 
     public GameObject player1;
     public GameObject player2;
 
     public GameObject pauseMenuUi;
+    public GameObject gameOverScreenUI;
+
+    public TextMeshProUGUI winTxt;
+    public TextMeshProUGUI timeTxt;
+
+    private bool isaTie = false;
 
     private void Start()
     {
         gm = GameObject.FindObjectOfType<GameManager>();
+        cd = GameObject.FindObjectOfType<Countdown>();
     }
     // Update is called once per frame
     void Update()
@@ -34,15 +43,38 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        if(gm.scorePlayer1 > gm.scorePlayer2 && gm.scorePlayer1 > 5)
+        if(cd.timeLeft <= 0.0)
+        {
+            if (gm.scorePlayer1 > gm.scorePlayer2)
+            {
+                gm.Win(player1);
+                GameOver();
+
+            }
+            else if (gm.scorePlayer2 > gm.scorePlayer1)
+            {
+                gm.Win(player2);
+                GameOver();
+
+            }
+            else
+            {
+                isaTie = true;
+                gm.Win(player1); //TODO tie
+                GameOver();
+            }
+        }
+        else if (gm.scorePlayer1 == 5)
         {
             gm.Win(player1);
+            GameOver();
         }
-        else if (gm.scorePlayer1 < gm.scorePlayer2 && gm.scorePlayer1 > 5)
+        else if (gm.scorePlayer1 == 5)
         {
             gm.Win(player2);
+            GameOver();
         }
-        
+
     }
 
     public void Resume()
@@ -67,5 +99,25 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    public void PlayAgain()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene(1);
+    }
+    private void GameOver()
+    {
+        if (isaTie)
+        {
+            winTxt.text = ("It's a tie");
+        }
+        else
+        {
+            winTxt.text = (gm.winner + " Wins!");
+        }
+        Time.timeScale = 0.0f;
+        gameOverScreenUI.SetActive(true);
+        
+
     }
 }

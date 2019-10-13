@@ -114,10 +114,7 @@ public class GameManager : MonoBehaviour
         {
             winner = player2.name;
         }
-        else
-        {
-            winner = "tie";
-        }
+      
 
     }
 
