@@ -18,8 +18,6 @@ public class GameManager : MonoBehaviour
 
     private GameObject goalPlayer1;
     private GameObject goalPlayer2;
-    public GameObject explosionP1;
-    public GameObject explosionP2;
 
     public int scorePlayer1 = 0;
     public int scorePlayer2 = 0;
@@ -45,17 +43,19 @@ public class GameManager : MonoBehaviour
         if (player.gameObject.name == "Player1")
         {
             scorePlayer1++;
-            Destroy(ball);
-            GameObject expl = Instantiate(explosionP1, ball.transform.position, Quaternion.identity) as GameObject;
-            Destroy(expl, 2);
+
+            Debug.Log(scorePlayer1); 
+            Debug.Log(scorePlayer2);
+
             StartCoroutine(Restart());
         }
         else
         {
             scorePlayer2++;
-            Destroy(ball);
-            GameObject expl = Instantiate(explosionP2, ball.transform.position, Quaternion.identity) as GameObject;
-            Destroy(expl, 2);
+            
+            Debug.Log(scorePlayer1);
+            Debug.Log(scorePlayer2);
+
             StartCoroutine(Restart());
         }
 
@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour
  
         Debug.Log("Pausing");
 
+        Destroy(ball);//TODO explosao bola
+        
         Time.timeScale = 0.5f;
         Time.fixedDeltaTime = 0.3f * 0.02f;
         yield return new WaitForSeconds(2f);
