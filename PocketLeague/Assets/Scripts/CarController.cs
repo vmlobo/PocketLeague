@@ -23,6 +23,11 @@ public class CarController : MonoBehaviour
     private TrailRenderer tr;
     private float boost;
 
+    // IMPORTANT NOTE:
+    // KeyCode thisKeyCode = (KeyCode) System.Enum.Parse(typeof(KeyCode), "Whatever")
+    // converts string from the player prefs back to keycode so that we can use it in the controls
+    //
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,6 +93,35 @@ public class CarController : MonoBehaviour
     }
 
     private void handleInputP1()
+    {
+        float h;
+
+        if ((h = Input.GetAxisRaw("Horizontal")) != 0)
+        {
+            if (isGrounded)
+                body.AddForce(h * transform.forward * impulseForce, ForceMode.Acceleration);
+            else if (isFlipped)
+                body.AddTorque(h * transform.right * flipForce, ForceMode.VelocityChange);
+            else
+                body.AddTorque(h * transform.right * turnRate, ForceMode.Acceleration);
+        }
+        if (Input.GetButtonDown("Jump"))
+        {
+            jump();
+        }
+        if (Input.GetButton("Boost") && boost > 0)
+        {
+            boostController(1);
+        }
+        if (Input.GetButtonUp("Boost") || boost <= 0)
+        {
+            boostController(0);
+
+        }
+    }
+
+    KeyCode forwardKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(Constants.forwardKey, "");
+    private void handleCustomInput()
     {
         float h;
 
