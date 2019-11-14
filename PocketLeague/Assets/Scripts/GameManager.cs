@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,8 +30,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        goalPlayer1 = Instantiate(goalPrefab, new Vector3(-11.33f, Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
-        goalPlayer2 = Instantiate(goalPrefab, new Vector3(11.33f, Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
+        // Setting volume up - Default 0.75
+        GameObject.Find("Main Camera").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(Constants.VolumeKey, 0.75f);
+
+        goalPlayer1 = Instantiate(goalPrefab, new Vector3(-11.33f, UnityEngine.Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
+        goalPlayer2 = Instantiate(goalPrefab, new Vector3(11.33f, UnityEngine.Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
         ball = Instantiate(prefabBola, new Vector3(0.0f, 5.0f, 0.0f), Quaternion.identity);
         player1Initialpos = player1.transform.position;
         player2Initialpos = player2.transform.position;
@@ -76,8 +80,8 @@ public class GameManager : MonoBehaviour
 
         Destroy(goalPlayer1);
         Destroy(goalPlayer2);
-        goalPlayer1 = Instantiate(goalPrefab, new Vector3(-11f, Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
-        goalPlayer2 = Instantiate(goalPrefab, new Vector3(11f, Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
+        goalPlayer1 = Instantiate(goalPrefab, new Vector3(-11f, UnityEngine.Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
+        goalPlayer2 = Instantiate(goalPrefab, new Vector3(11f, UnityEngine.Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
 
         player1.transform.position = player1Initialpos;
         player2.transform.position = player2Initialpos;

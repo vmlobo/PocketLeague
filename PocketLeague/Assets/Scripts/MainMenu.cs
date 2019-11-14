@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class MainMenu : MonoBehaviour
     public GameObject settingsMenu;
     public SM_TabWindow initialTab;
 
+    public Slider volumeSlider;
 
     private void Update()
     {
@@ -29,7 +31,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Loading");
     }
 
     public void QuitGame()
@@ -46,7 +48,7 @@ public class MainMenu : MonoBehaviour
         settingsMenu.SetActive(true);
         settingsMenu.GetComponent<SM_TabGroup>().ChangeTab(initialTab);
         settingsMenu.GetComponent<SM_TabGroup>().Toggle(true);
-        FillControls();
+        StartCoroutine(waitAndFillControls(.5f));
     }
 
     // Called when the user presses the cross to leave settings
@@ -121,5 +123,22 @@ public class MainMenu : MonoBehaviour
     {
         PlayerPrefs.SetString(control, "");
         GameObject.Find(control + "_text").GetComponent<TextMeshProUGUI>().text = "";
+    }
+
+    IEnumerator waitAndFillControls(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        FillControls();
+    }
+
+    // Handle volume
+    public void onVolumeChange(float chosenVolume)
+    {
+        PlayerPrefs.SetFloat(Constants.VolumeKey, chosenVolume);
+    }
+
+    public void setVolumeSlider()
+    {
+        volumeSlider.value = PlayerPrefs.GetFloat(Constants.VolumeKey, 0.75f);
     }
 }

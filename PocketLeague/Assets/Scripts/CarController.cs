@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class CarController : MonoBehaviour
 {
-    public float impulseForce;
-    public float jumpForce;
-    public float boostForce;
-    public float turnRate;
-    public float flipForce;
-    public float boostDischargeRate;
-    public float boostChargeRate;
+    private float impulseForce = 20f;
+    private float jumpForce = 300f;
+    private float boostForce = 25f;
+    private float turnRate = 30f;
+    private float flipForce = 1000f;
+    private float boostDischargeRate = 60f;
+    private float boostChargeRate = 20f;
 
     private bool isGrounded;
     private bool isFlipped;
@@ -29,13 +29,21 @@ public class CarController : MonoBehaviour
     //
 
     // Start is called before the first frame update
+
+    // Controls
+    KeyCode forwardKey;
+    KeyCode backKey;
+    KeyCode leftKey;
+    KeyCode rightKey;
+    KeyCode jumpKey;
+    KeyCode nitroKey;
     void Start()
     {
+        SetupControls();
 
         body = GetComponent<Rigidbody>();
         ps = GetComponent<ParticleSystem>();
         tr = GetComponent<TrailRenderer>();
-
 
         boost = 100;
         jumpCount = 0;
@@ -45,13 +53,11 @@ public class CarController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //Debug.Log(boost);
-
         isGroundedCheck();
 
         if (transform.name == "Player1")
-            handleInputP1();
+            //handleInputP1();
+            handleCustomInput();
         else
             handleInputP2();
 
@@ -120,33 +126,66 @@ public class CarController : MonoBehaviour
         }
     }
 
-    KeyCode forwardKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(Constants.forwardKey, "");
     private void handleCustomInput()
     {
         float h;
 
-        if ((h = Input.GetAxisRaw("Horizontal")) != 0)
+        if (Input.GetKey(forwardKey))
+        {
+            body.AddForce(transform.forward * impulseForce, ForceMode.Acceleration);
+        } 
+        if (Input.GetKey(backKey))
+        {
+            body.AddForce(-transform.forward * impulseForce, ForceMode.Acceleration);
+        }
+        if (Input.GetKey(leftKey))
         {
             if (isGrounded)
-                body.AddForce(h * transform.forward * impulseForce, ForceMode.Acceleration);
-            else if (isFlipped)
-                body.AddTorque(h * transform.right * flipForce, ForceMode.VelocityChange);
+                body.AddTorque(-transform.right * turnRate, ForceMode.Acceleration);
             else
-                body.AddTorque(h * transform.right * turnRate, ForceMode.Acceleration);
+                body.AddTorque(-transform.right * flipForce, ForceMode.VelocityChange);
         }
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKey(rightKey))
+        {
+            if (isGrounded)
+                body.AddTorque(transform.right * turnRate, ForceMode.Acceleration);
+            else
+                body.AddTorque(transform.right * flipForce, ForceMode.VelocityChange);
+        }
+        if (Input.GetKey(jumpKey))
         {
             jump();
         }
-        if (Input.GetButton("Boost") && boost > 0)
+        if (Input.GetKey(nitroKey) && boost > 0)
         {
             boostController(1);
-        }
-        if (Input.GetButtonUp("Boost") || boost <= 0)
+        } else
         {
             boostController(0);
-
         }
+
+        //if ((h = Input.GetAxisRaw("Horizontal")) != 0)
+        //{
+        //    if (isGrounded)
+        //        body.AddForce(h * transform.forward * impulseForce, ForceMode.Acceleration);
+        //    else if (isFlipped)
+        //        body.AddTorque(h * transform.right * flipForce, ForceMode.VelocityChange);
+        //    else
+        //        body.AddTorque(h * transform.right * turnRate, ForceMode.Acceleration);
+        //}
+        //if (Input.GetButtonDown("Jump"))
+        //{
+        //    jump();
+        //}
+        //if (Input.GetButton("Boost") && boost > 0)
+        //{
+        //    boostController(1);
+        //}
+        //if (Input.GetButtonUp("Boost") || boost <= 0)
+        //{
+        //    boostController(0);
+
+        //}
     }
 
     private void boostController(int i)
@@ -194,6 +233,14 @@ public class CarController : MonoBehaviour
         //Debug.DrawRay(transform.position, transform.up* 0.40f);
     }
 
-
+    private void SetupControls()
+    {
+        forwardKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(Constants.forwardKey, ""));
+        backKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(Constants.backKey, ""));
+        leftKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(Constants.leftKey, ""));
+        rightKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(Constants.rightKey, ""));
+        jumpKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(Constants.jumpKey, ""));
+        nitroKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString(Constants.NitroKey, ""));
+    }
 
 }

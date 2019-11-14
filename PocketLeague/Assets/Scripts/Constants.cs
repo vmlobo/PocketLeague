@@ -10,4 +10,6 @@ public class Constants : MonoBehaviour
     public const string leftKey = "LEFT";
     public const string jumpKey = "JUMP";
     public const string NitroKey = "NITRO";
+
+    public const string VolumeKey = "VOLUME";
 }
