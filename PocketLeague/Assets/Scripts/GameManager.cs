@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject player1;
-    public GameObject player2;
     public GameObject prefabBola;
     public string winner;
 
@@ -33,30 +31,23 @@ public class GameManager : MonoBehaviour
         // Setting volume up - Default 0.75
         GameObject.Find("Main Camera").GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat(Constants.VolumeKey, 0.75f);
 
-        goalPlayer1 = Instantiate(goalPrefab, new Vector3(-11.33f, UnityEngine.Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
-        goalPlayer2 = Instantiate(goalPrefab, new Vector3(11.33f, UnityEngine.Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
-        ball = Instantiate(prefabBola, new Vector3(0.0f, 5.0f, 0.0f), Quaternion.identity);
-        player1Initialpos = player1.transform.position;
-        player2Initialpos = player2.transform.position;
-        player1Initialrot = player1.transform.rotation;
-        player2Initialrot = player2.transform.rotation;
     }
 
-    public void Goal(GameObject player)
+    public void Goal(string player)
     {
-        if (player.gameObject.name == "Player1")
+        if (player == "Player1")
         {
             scorePlayer1++;
-            Destroy(ball);
-            GameObject expl = Instantiate(explosionP1, ball.transform.position, Quaternion.identity) as GameObject;
+            GameObject expl = Instantiate(explosionP1, GameSetupController.ball.transform.position, Quaternion.identity) as GameObject;
+            Destroy(GameSetupController.ball);
             Destroy(expl, 2);
             StartCoroutine(Restart());
         }
         else
         {
             scorePlayer2++;
-            Destroy(ball);
-            GameObject expl = Instantiate(explosionP2, ball.transform.position, Quaternion.identity) as GameObject;
+            GameObject expl = Instantiate(explosionP2, GameSetupController.ball.transform.position, Quaternion.identity) as GameObject;
+            Destroy(GameSetupController.ball);
             Destroy(expl, 2);
             StartCoroutine(Restart());
         }
@@ -78,36 +69,24 @@ public class GameManager : MonoBehaviour
 
         ball = Instantiate(prefabBola, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
 
-        Destroy(goalPlayer1);
-        Destroy(goalPlayer2);
-        goalPlayer1 = Instantiate(goalPrefab, new Vector3(-11f, UnityEngine.Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
-        goalPlayer2 = Instantiate(goalPrefab, new Vector3(11f, UnityEngine.Random.Range(-3.38f, 4.20f), 0.0f), Quaternion.identity);
-
-        player1.transform.position = player1Initialpos;
-        player2.transform.position = player2Initialpos;
-        player1.transform.rotation = player1Initialrot;
-        player2.transform.rotation = player2Initialrot;
-        player1.GetComponent<CarController>().resetBoost();
-        player2.GetComponent<CarController>().resetBoost();
-
-        //Debug.Log("restarting");
+        GameSetupController.instatiateObjects();
     }
 
 
-    public void Win(GameObject player)
+    public void Win(string player)
     {
         Time.timeScale = 0f;
+        winner = player;
+        //if (player.name == player1.name)
+        //{
+        //    winner = player1.name;
 
-        if (player.name == player1.name)
-        {
-            winner = player1.name;
-
-        } else if(player.name == player2.name)
-        {
-            winner = player2.name;
-        }
-      
-
+        //} else if(player.name == player2.name)
+        //{
+        //    winner = player2.name;
+        //}
     }
+
+
 
 }

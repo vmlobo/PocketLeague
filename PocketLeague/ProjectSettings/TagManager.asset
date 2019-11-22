@@ -7,6 +7,10 @@ TagManager:
   - Wheels
   - Car
   - Ball
+  - player1
+  - player2
+  - Goal1
+  - Goal2
   layers:
   - Default
   - TransparentFX

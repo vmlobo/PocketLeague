@@ -49,31 +49,31 @@ public class PauseMenu : MonoBehaviour
         {
             if (gm.scorePlayer1 > gm.scorePlayer2)
             {
-                gm.Win(player1);
+                gm.Win("Player 1");
                 GameOver();
 
             }
             else if (gm.scorePlayer2 > gm.scorePlayer1)
             {
-                gm.Win(player2);
+                gm.Win("Player 2");
                 GameOver();
 
             }
             else
             {
                 isaTie = true;
-                gm.Win(player1);
+                gm.Win("Player 1");
                 GameOver();
             }
         }
         else if (gm.scorePlayer1 == 5)
         {
-            gm.Win(player1);
+            gm.Win("Player 1");
             GameOver();
         }
-        else if (gm.scorePlayer1 == 5)
+        else if (gm.scorePlayer2 == 5)
         {
-            gm.Win(player2);
+            gm.Win("Player 2");
             GameOver();
         }
 

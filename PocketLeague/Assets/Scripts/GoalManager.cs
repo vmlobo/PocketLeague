@@ -12,17 +12,20 @@ public class GoalManager : MonoBehaviour
         gm = GameObject.FindObjectOfType<GameManager>();
     }
 
+    // Eventually, allow users to give nicknames
+    //
+    //
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ball")
         {
-            if (this.transform.position.x > 0)
+            if (gameObject.tag == "Goal1")
             {
-                gm.Goal(gm.player1);
+                gm.Goal("Player 1");
             }
-            else
+            else if (gameObject.tag == "Goal2")
             {
-                gm.Goal(gm.player2);
+                gm.Goal("Player 2");
             }
         }
 

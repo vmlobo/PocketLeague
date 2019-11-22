@@ -29,7 +29,7 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
     // bool values for if the timer can count down
     private bool readyToCountDown;
     private bool readyToStart;
-    private bool startingGame;
+    private bool startingGame = false;
 
     // countdown timer values
     private float timerToStartGame;
@@ -129,7 +129,7 @@ public class DelayStartWaitingRoomController : MonoBehaviourPunCallbacks
         // if the countdown timer reaches 0 the game will then start
         if (timerToStartGame <= 0f)
         {
-            if (!startingGame)
+            if (startingGame)
                 return;
             startGame();
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,9 @@ public class CarController : MonoBehaviour
     KeyCode rightKey;
     KeyCode jumpKey;
     KeyCode nitroKey;
+
+    // For Multiplayer
+    private PhotonView photonView;
     void Start()
     {
         SetupControls();
@@ -54,12 +58,16 @@ public class CarController : MonoBehaviour
     void Update()
     {
         isGroundedCheck();
+        if (!PhotonNetwork.IsMasterClient && gameObject.tag == "player2")
+            handleCustomInput(false);
+        else if (PhotonNetwork.IsMasterClient && gameObject.tag == "player1")
+            handleCustomInput(true);
 
-        if (transform.name == "Player1")
-            //handleInputP1();
-            handleCustomInput();
-        else
-            handleInputP2();
+        //if (transform.name == "Player1")
+        //    //handleInputP1();
+        //    handleCustomInput();
+        //else
+        //    handleInputP2();
 
         boost = Mathf.Clamp(boost + (boostChargeRate * Time.deltaTime),0,100);
         if (!isFlipped && !isGrounded)
@@ -126,9 +134,11 @@ public class CarController : MonoBehaviour
         }
     }
 
-    private void handleCustomInput()
+    private void handleCustomInput(bool isPlayerOne)
     {
-        float h;
+        float multiplier = 1;
+        if (!isPlayerOne)
+            multiplier = -1;
 
         if (Input.GetKey(forwardKey))
         {
@@ -141,16 +151,20 @@ public class CarController : MonoBehaviour
         if (Input.GetKey(leftKey))
         {
             if (isGrounded)
-                body.AddTorque(-transform.right * turnRate, ForceMode.Acceleration);
+            {
+                body.AddTorque(multiplier * -transform.right * turnRate, ForceMode.Acceleration);
+            }
             else
-                body.AddTorque(-transform.right * flipForce, ForceMode.VelocityChange);
+            {
+                body.AddTorque(multiplier * -transform.right * flipForce, ForceMode.VelocityChange);
+            }
         }
         if (Input.GetKey(rightKey))
         {
             if (isGrounded)
-                body.AddTorque(transform.right * turnRate, ForceMode.Acceleration);
+                body.AddTorque(multiplier * transform.right * turnRate, ForceMode.Acceleration);
             else
-                body.AddTorque(transform.right * flipForce, ForceMode.VelocityChange);
+                body.AddTorque(multiplier * transform.right * flipForce, ForceMode.VelocityChange);
         }
         if (Input.GetKey(jumpKey))
         {
