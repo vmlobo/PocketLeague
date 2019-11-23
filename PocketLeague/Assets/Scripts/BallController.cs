@@ -16,9 +16,12 @@ public class BallController : MonoBehaviour
 
     void Update()
     {
-        float exp = 0.6f+Mathf.PingPong(Time.time, 1.5f);
-        rend.material.SetFloat("_FresnelExponent", exp);
-        rb.AddForce(new Vector3(0,1*antiGravForce,0),ForceMode.Force);
+        if (MultiplayerGameManager.hasGameStarted)
+        {
+            float exp = 0.6f + Mathf.PingPong(Time.time, 1.5f);
+            rend.material.SetFloat("_FresnelExponent", exp);
+            rb.AddForce(new Vector3(0, 1 * antiGravForce, 0), ForceMode.Force);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

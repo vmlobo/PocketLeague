@@ -141,4 +141,10 @@ public class MainMenu : MonoBehaviour
     {
         volumeSlider.value = PlayerPrefs.GetFloat(Constants.VolumeKey, 0.75f);
     }
+
+    public void setPlayerNickname(string nickname)
+    {
+        Debug.Log("Called");
+        PlayerPrefs.SetString(Constants.NicknameKey, nickname);
+    }
 }

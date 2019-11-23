@@ -45,7 +45,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        if(cd.timeLeft <= 0.0)
+        if(cd.gameTimeLeft <= 0.0)
         {
             if (gm.scorePlayer1 > gm.scorePlayer2)
             {

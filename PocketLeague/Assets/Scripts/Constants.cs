@@ -12,4 +12,6 @@ public class Constants : MonoBehaviour
     public const string NitroKey = "NITRO";
 
     public const string VolumeKey = "VOLUME";
+
+    public const string NicknameKey = "NICKNAME";
 }

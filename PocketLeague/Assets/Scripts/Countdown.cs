@@ -6,24 +6,41 @@ using System.Threading;
 using TMPro;
 public class Countdown : MonoBehaviour
 {
-    public int timeLeft = 5; //Seconds Overall
-    public TextMeshProUGUI countdown; //UI Text Object
+    public float gameTimeLeft = 60; //Seconds Overall
+    public TextMeshProUGUI gameCountdown; //UI Text Object
+
+    // Countdown to starting the game
+    public float startGamecountDownTimer = 3; //Seconds Overall
+    public TextMeshProUGUI startGameCountdown; //UI Text Object
+
     void Start()
     {
-        StartCoroutine("LoseTime");
         Time.timeScale = 1; //Just making sure that the timeScale is right
     }
     void Update()
     {
-        countdown.text = ("" + timeLeft); //Showing the Score on the Canvas
-    }
-    //Simple Coroutine
-    IEnumerator LoseTime()
-    {
-        while (true)
+        if (MultiplayerGameManager.hasGameStarted)
         {
-            yield return new WaitForSeconds(1);
-            timeLeft--;
+            gameTimeLeft -= Time.deltaTime;
+            gameCountdown.text = ((int)gameTimeLeft).ToString(); //Showing the Score on the Canvas
+        } else if (shouldCountDown)
+        {
+            startGamecountDownTimer -= Time.deltaTime;
+            startGameCountdown.text = ((int)startGamecountDownTimer).ToString();
+            if (startGamecountDownTimer < 0)
+            {
+                MultiplayerGameManager.StartGame();
+                shouldCountDown = false;
+                startGameCountdown.text = "";
+            }
+
         }
+    }
+
+    private bool shouldCountDown = false;
+    public void initiateCountdown()
+    {
+        Debug.Log("Countdown initiating");
+        shouldCountDown = true;
     }
 }

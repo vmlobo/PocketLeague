@@ -52,29 +52,33 @@ public class CarController : MonoBehaviour
         boost = 100;
         jumpCount = 0;
 
+        GameObject.Find("MultiplayerManager(Clone)").GetComponent<MultiplayerGameManager>().ready(PhotonNetwork.IsMasterClient);
+        //MultiplayerGameManager.ready(PhotonNetwork.IsMasterClient); // To access if this is player1 or player2
     }
 
     // Update is called once per frame
     void Update()
     {
-        isGroundedCheck();
-        if (!PhotonNetwork.IsMasterClient && gameObject.tag == "player2")
-            handleCustomInput(false);
-        else if (PhotonNetwork.IsMasterClient && gameObject.tag == "player1")
-            handleCustomInput(true);
+        if (MultiplayerGameManager.hasGameStarted)
+        {
+            isGroundedCheck();
+            if (!PhotonNetwork.IsMasterClient && gameObject.tag == "player2")
+                handleCustomInput(false);
+            else if (PhotonNetwork.IsMasterClient && gameObject.tag == "player1")
+                handleCustomInput(true);
 
-        //if (transform.name == "Player1")
-        //    //handleInputP1();
-        //    handleCustomInput();
-        //else
-        //    handleInputP2();
+            //if (transform.name == "Player1")
+            //    //handleInputP1();
+            //    handleCustomInput();
+            //else
+            //    handleInputP2();
 
-        boost = Mathf.Clamp(boost + (boostChargeRate * Time.deltaTime),0,100);
-        if (!isFlipped && !isGrounded)
-            tr.emitting = true;
-        else
-            tr.emitting = false;
-
+            boost = Mathf.Clamp(boost + (boostChargeRate * Time.deltaTime), 0, 100);
+            if (!isFlipped && !isGrounded)
+                tr.emitting = true;
+            else
+                tr.emitting = false;
+        }
     }
 
     
